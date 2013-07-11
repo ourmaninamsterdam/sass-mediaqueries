@@ -1,0 +1,39 @@
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+}
+
+body {
+  background: #666;
+}
+
+.col {
+  background: #000;
+  color: #fff;
+  outline: 1px solid #ccc;
+  padding: 5px;
+}
+@media only screen and (min-width: 600px) {
+  .col {
+    float: left;
+    width: 50%;
+  }
+}
+@media only screen and (min-width: 960px) {
+  .col {
+    float: left;
+    width: 25%;
+  }
+}
+@media only screen and (min-width: 960px) {
+  .col {
+    background: #333;
+  }
+}
+@media only screen and (min-width: 1280px) {
+  .col {
+    float: left;
+    width: 12.5%;
+  }
+}

@@ -1,0 +1,31 @@
+*{
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+body{
+	background: #666;
+}
+.col{
+	background: #000;
+	color: #fff;
+	outline: 1px solid #ccc;
+	padding: 5px;
+
+	@include media-query( medium ){
+		float: left;
+		width: 50%;
+	};
+	@include media-query( wide ){
+		float: left;
+		width: 25%;
+	};
+	// Use the $include: false flag to exclude media-query content from browsers that don't support it
+	@include media-query( wide, false ){
+		background: #333;
+	};
+	@include media-query( superwide ){
+		float: left;
+		width: 12.5%;
+	};
+}

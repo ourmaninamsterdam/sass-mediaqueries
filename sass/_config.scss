@@ -1,0 +1,33 @@
+// Add your media queries by name
+$media-query-ids: narrow, medium, wide, superwide;
+$media-queries: "only screen and (max-width: 320px)",
+				"only screen and (min-width: 600px)",
+				"only screen and (min-width: 960px)",
+				"only screen and (min-width: 1280px)";
+
+// @get-item-by-name
+// Get an item from a list
+// $name (string) Target item ID
+// $names-list (array) List of item IDs
+// $items (array) List of linked items
+@function get-item-by-name( $name, $names-list, $items ){
+	@return #{ nth( $items, index( $names-list, $name ) ) };
+}
+
+// @media-query
+// $breakpoint (string) Breakpoint ID
+// $include (boolean) Flag to include @content
+// @TODO - Allow media query chaining
+@mixin media-query( $breakpoint, $include: true ){
+	$media-query : get-item-by-name( $breakpoint, $media-query-ids, $media-queries );
+	@if $supports-mq {
+		@media #{ $media-query } { @content; };
+	}
+	@else {
+		@if $breakpoint == $default-breakpoint {
+			@if $include {
+				@content;
+			}
+		}
+	}
+}
