@@ -11,7 +11,7 @@ For this example I will be discussing IE8 and below.
 
 ### Usage
 
-Carry on building mobile first, but when you reach for the media queries, instead of using the CSS3 `@media (only screen...)` expressions, you `@include` the Sass `media-query` mixin below:
+Carry on building mobile first, but when you reach for the media queries, instead of using the CSS3 `@media only screen and (...)` expressions, you `@include` the Sass `media-query` mixin below:
 
 ```scss
 @include media-query( wide ){
@@ -19,7 +19,7 @@ Carry on building mobile first, but when you reach for the media queries, instea
 };
 ```
 
-The key factor of what makes this work is its reliance on *named* media queries. Normally you would use media queries with explicit properties, such as `@media (only screen min-width 320px)...`. With this approach, we are using named media queries, stored in a linked-list within a Sass variable to include pre-defined media queries:
+The key factor of what makes this work is its reliance on *named* media queries. Normally you would use media queries with explicit properties, such as `@media only screen and (min-width 320px)...`. With this approach, we are using named media queries, stored in a linked-list within a Sass variable to include pre-defined media queries:
 
 ``` scss
 $media-query-ids: narrow, medium, wide, superwide;
