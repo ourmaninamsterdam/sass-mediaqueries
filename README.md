@@ -17,7 +17,7 @@ My approach utilises Sass mixins, named, modular media queries and conditional c
 
 ## Usage
 
-Carry on building mobile first, but when you reach for the media queries, instead of using the CSS3 `@media only screen and (...)` expressions, you `@include` the `media-query` mixin below:
+Carry on building mobile first, but when you reach for the media queries, instead of using a CSS3 `@media only screen and (...)` expression, `@include` the `media-query` mixin below:
 
 ```scss
 @include media-query( wide ){
@@ -49,15 +49,15 @@ The media-query mixin is as follows:
 
 ``` scss
 // @media-query
-// $breakpoint (string) Breakpoint ID
+// $name (string) Breakpoint ID
 // $include (boolean) Flag to include @content
-@mixin media-query( $breakpoint, $include: true ){
-	$media-query : get-item-by-name( $breakpoint, $media-query-ids, $media-queries );
+@mixin media-query( $name, $include: true ){
+	$media-query : get-item-by-name( $name, $media-query-ids, $media-queries );
 	@if $supports-mq {
 		@media #{ $media-query } { @content; };
 	}
 	@else {
-		@if $breakpoint == $default-breakpoint {
+		@if $name == $default-view {
 			@if $include {
 				@content;
 			}
@@ -68,9 +68,7 @@ The media-query mixin is as follows:
 
 It takes two parameters. 
 
-* `breakpoint` (string).
-
-	*Note: this param name is going to change as it self-limiting and misleading in that it only describes breakpoints, and isn't inclusive of device-pixel queries and other such expressions)*. 
+* `name` (string).
 
 * `include` (boolean) *Default: true*
 

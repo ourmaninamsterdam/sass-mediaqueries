@@ -15,16 +15,16 @@ $media-queries: "only screen and (max-width: 320px)",
 }
 
 // @media-query
-// $breakpoint (string) Breakpoint ID
+// $name (string) Breakpoint ID
 // $include (boolean) Flag to include @content
 // @TODO - Allow media query chaining
-@mixin media-query( $breakpoint, $include: true ){
-	$media-query : get-item-by-name( $breakpoint, $media-query-ids, $media-queries );
+@mixin media-query( $name, $include: true ){
+	$media-query : get-item-by-name( $name, $media-query-ids, $media-queries );
 	@if $supports-mq {
 		@media #{ $media-query } { @content; };
 	}
 	@else {
-		@if $breakpoint == $default-breakpoint {
+		@if $name == $default-view {
 			@if $include {
 				@content;
 			}
