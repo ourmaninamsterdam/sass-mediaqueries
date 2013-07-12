@@ -43,14 +43,11 @@ A handy helper function then picks the right media query for us.
 }
 ```
 
-*Note: Incidentally, this technique is also helpful for specifying font stacks by name.*
+*Note: Incidentally, this technique is also helpful for [including font stacks by name](https://gist.github.com/ourmaninamsterdam/5388493).*
 
 The media-query mixin is as follows:
 
 ``` scss
-// @media-query
-// $name (string) Breakpoint ID
-// $include (boolean) Flag to include @content
 @mixin media-query( $name, $include: true ){
 	$media-query : get-item-by-name( $name, $media-query-ids, $media-queries );
 	@if $supports-mq {
@@ -65,8 +62,6 @@ The media-query mixin is as follows:
 	}
 }
 ```
-
-It takes two parameters. 
 
 * `name` (string).
 
