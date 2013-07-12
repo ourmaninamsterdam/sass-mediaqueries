@@ -15,7 +15,7 @@ $media-queries: "only screen and (max-width: 320px)",
 }
 
 // @media-query
-// $name (string) Breakpoint ID
+// $name (string) Query name
 // $include (boolean) Flag to include @content
 // @TODO - Allow media query chaining
 @mixin media-query( $name, $include: true ){
