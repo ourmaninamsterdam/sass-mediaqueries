@@ -1,4 +1,4 @@
-# Mobile First: Using Sass to provide a proper default view for old IE (8 and below)
+# Mobile First: Using Sass to provide a default view for old IE (8 and below)
 
 ## Introduction
 When following the responsive, mobile first methodology, there's always an issue of how to support those browsers which don't have media query support, such as old IE. By default, browsers without MQ support will see the mobile view. To workaround this some advocate creating a set of duplicate IE-specific styles as a workaround. This approach leads to duplicate code, increased page weight and possibly a degraded experience. Another approach makes use of JavaScript polyfills, such as [respond.js](https://github.com/scottjehl/Respond), to emulate media queries. The latter goes some way to solving this issue, but also raises a few of its own, notably performance and the reliance on JavaScript.
@@ -13,7 +13,7 @@ My approach utilises Sass mixins, named, modular media queries and conditional c
 * Produces a single HTTP request
 * Improves CSS organisation by using predefined media queries
 * Pure CSS/HTML, no JS reliance
-* Flexible to fit around any CSS methodology
+* Flexible enough to fit within any CSS methodology
 
 ## Usage
 
@@ -75,7 +75,7 @@ We have two main stylesheets (for the sake of brevity I'm keeping things simple)
 **ie.scss** - for old IE
 ```
 $supports-mq: false;
-$default-breakpoint: wide;
+$default-view: wide;
 
 @import "_styles";
 ```
@@ -103,7 +103,7 @@ body {
 }
 ```
 
-**main.scss** - for those browswers that support media queries. 
+**main.scss** - for those browsers that support media queries. 
 
 ```
 $supports-mq: true;
@@ -156,14 +156,13 @@ body {
 ```
 
 
-In these we set two variables: `$supports-mq` and `$default-breakpoint`. It's these which the `media-query` uses to control the output of the mixin.
+In these we set two variables: `$supports-mq` and `$default-view`. It's these which the `media-query` mixing uses to control its output.
 
 `_styles.scss` is just my way of keeping things DRY but you could include all your `@imports` directly within each file, if you wish.
 
+#### In the HTML
 
 We then include these using IE conditional comments to serve the right CSS for the browser. old IE ignores main.css and just pulls ie.css, saving us an HTTP request.
-
-#### In the HTML
 
 ``` html
 ...
@@ -206,6 +205,7 @@ We then include these using IE conditional comments to serve the right CSS for t
 ### Future development
 
 * Add query chaining
+* Improve examples
 * DONE Improve variable naming
 
 #### Credits
