@@ -1,19 +1,19 @@
-# Using Sass to workaround the mobile first IE8 view issue
+# Mobile First: Using Sass to provide a proper default view for old IE (8 and below)
 
 ## Introduction
-When following the responsive, mobile first methodology, there's always an issue of how to support those browsers which don't have media query support, such as IE8. Some advocate serving up a modified version of the mobile view to such browsers, or a completely separate set of styles, which adds another HTTP request and even more to the page weight. While others advocate the use of JavaScript polyfills, such as [respond.js](https://github.com/scottjehl/Respond) to emulate media queries. The latter goes some way to solving this issue, but also raises a few of its own, notably performance and the reliance on JavaScript.
+When following the responsive, mobile first methodology, there's always an issue of how to support those browsers which don't have media query support, such as old IE. By default, browsers without MQ support will see the mobile view. To workaround this some advocate creating a set of duplicate IE-specific styles as a workaround, which leads to duplicate code, increased page weight and possibly a degraded experience. Another approach makes use of JavaScript polyfills, such as [respond.js](https://github.com/scottjehl/Respond), to emulate media queries. The latter goes some way to solving this issue, but also raises a few of its own, notably performance and the reliance on JavaScript.
 
 ### An alternative approach
 
-My approach utilises Sass mixins, named, modular media queries and conditional comments to output pure CSS/HTML, so you can continue building mobile first as you normally would, while allowing you to choose a specific view to fallback to for &lt;=IE8 and other non-supporting browsers.
+My approach utilises Sass mixins, named, modular media queries and conditional comments to output pure CSS/HTML, so you can continue building mobile first as you normally would, while allowing you to choose a specific view to fallback for old IE and other non-supporting browsers.
 
 #### Benefits
 
-* Allows you to specify a proper default view for IE8 and below.
+* Allows you to specify a proper default view for old IE.
 * Produces a single HTTP request
-* Improves organisation of media queries by using predefined media queries
+* Improves CSS organisation by using predefined media queries
 * Pure CSS/HTML, no JS reliance
-* Flexible
+* Flexible to fit around any CSS methodology
 
 ## Usage
 
@@ -30,9 +30,9 @@ The key factor of what makes this work is its reliance on *predefined* media que
 ``` scss
 $media-query-ids: narrow, medium, wide, superwide;
 $media-queries: "only screen and (max-width: 320px)",
-		"only screen and (min-width: 600px)",
-		"only screen and (min-width: 960px)",
-		"only screen and (min-width: 1280px)";
+				"only screen and (min-width: 600px)",
+				"only screen and (min-width: 960px)",
+				"only screen and (min-width: 1280px)";
 ```
 
 A handy helper function then picks the right media query for us. 
@@ -72,7 +72,7 @@ The media-query mixin is as follows:
 #### Stylesheets
 We have two main stylesheets (for the sake of brevity I'm keeping things simple): 
 
-**ie.scss** (for IE)
+**ie.scss** - for old IE
 ```
 $supports-mq: false;
 $default-breakpoint: wide;
@@ -80,7 +80,30 @@ $default-breakpoint: wide;
 @import "_styles";
 ```
 
-**main.scss** (for those that support media queries). 
+Outputs:
+
+```css
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+}
+
+body {
+  background: #666;
+}
+
+.col {
+  background: #000;
+  color: #fff;
+  outline: 1px solid #ccc;
+  padding: 5px;
+  float: left;
+  width: 25%;
+}
+```
+
+**main.scss** - for those browswers that support media queries. 
 
 ```
 $supports-mq: true;
@@ -88,12 +111,57 @@ $supports-mq: true;
 @import "_styles";
 ```
 
+Outputs:
+
+```css
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+}
+
+body {
+  background: #666;
+}
+
+.col {
+  background: #000;
+  color: #fff;
+  outline: 1px solid #ccc;
+  padding: 5px;
+}
+@media only screen and (min-width: 600px) {
+  .col {
+    float: left;
+    width: 50%;
+  }
+}
+@media only screen and (min-width: 960px) {
+  .col {
+    float: left;
+    width: 25%;
+  }
+}
+@media only screen and (min-width: 960px) {
+  .col {
+    background: #333;
+  }
+}
+@media only screen and (min-width: 1280px) {
+  .col {
+    float: left;
+    width: 12.5%;
+  }
+}
+```
+
+
 In these we set two variables: `$supports-mq` and `$default-breakpoint`. It's these which the `media-query` uses to control the output of the mixin.
 
-`_styles.css` is just my way of keeping things DRY but you could include all your `@imports` directly within each file, if you wish.
+`_styles.scss` is just my way of keeping things DRY but you could include all your `@imports` directly within each file, if you wish.
 
 
-We then include these using IE conditional comments to serve the right CSS for the browser. IE8 ignores main.css and just pulls ie.css, saving us an HTTP request.
+We then include these using IE conditional comments to serve the right CSS for the browser. old IE ignores main.css and just pulls ie.css, saving us an HTTP request.
 
 #### In the HTML
 
@@ -113,15 +181,19 @@ We then include these using IE conditional comments to serve the right CSS for t
 
 ``` scss
 .col{
-	/* My Mobile first styles*/
+	/* Mobile first styles*/
 	background: #000;
 	color: #fff;
 	font-weight: bold;
 	padding: 10px;
 	
-	@include media-query( wide ){
-		float: left;
+	@include media-query( medium ){
 		padding: 10px;
+	};
+	/* This is our chosen fallback view for old IE */
+	@include media-query( wide ){ 
+		float: left;
+		padding: 5px;
 		width: 25%;
 	};
 	@include media-query( superwide ){
@@ -134,7 +206,7 @@ We then include these using IE conditional comments to serve the right CSS for t
 ### Future development
 
 * Add query chaining
-* Improve variable naming
+* DONE Improve variable naming
 
 #### Credits
 Justin Perry, 2013
