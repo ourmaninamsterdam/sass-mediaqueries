@@ -79,6 +79,7 @@ $default-view: wide;
 
 @import "_styles";
 ```
+Including `_styles.scss` is just my way of keeping things DRY but you could include all your `@imports` directly within each of the two files, if you wish.
 
 Outputs:
 
@@ -169,8 +170,6 @@ In these we set two variables: `$supports-mq` and `$default-view`. It's these wh
 // @import "_partials/_buttons"
 
 ```
-`_styles.scss` is just my way of keeping things DRY but you could include all your `@imports` directly within each of the two files, if you wish.
-
 **base.scss** - Then use the `media-query` mixin in place of any media-query expressions:
 
 ```scss
