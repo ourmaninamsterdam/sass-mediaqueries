@@ -155,14 +155,62 @@ body {
 }
 ```
 
-
 In these we set two variables: `$supports-mq` and `$default-view`. It's these which the `media-query` mixing uses to control its output.
 
-`_styles.scss` is just my way of keeping things DRY but you could include all your `@imports` directly within each file, if you wish.
+**`_styles.scss`** - include any of your styles. I'm using partials here to keep things modular. 
+
+```scss
+@import "_config";
+// Include your partials here. Just _base at the moment
+@import "_base"
+// @import "_partials/fonts"
+// @import "_partials/_layout"
+// @import "_partials/_grid"
+// @import "_partials/_navigation"
+// @import "_partials/_buttons"
+
+```
+`_styles.scss` is just my way of keeping things DRY but you could include all your `@imports` directly within each of the two files, if you wish.
+
+**`base.css`** - Then use the `media-query` mixin in place of any media-query expressions:
+
+```scss
+*{
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+body{
+	background: #666;
+}
+.col{
+	background: #000;
+	color: #fff;
+	outline: 1px solid #ccc;
+	padding: 5px;
+
+	@include media-query( medium ){
+		float: left;
+		width: 50%;
+	};
+	@include media-query( wide ){
+		float: left;
+		width: 25%;
+	};
+	// Use the $include: false flag to exclude media-query content from browsers that don't support it
+	@include media-query( wide, false ){
+		background: #333;
+	};
+	@include media-query( superwide ){
+		float: left;
+		width: 12.5%;
+	};
+}
+```
 
 #### In the HTML
 
-We then include these using IE conditional comments to serve the right CSS for the browser. old IE ignores main.css and just pulls ie.css, saving us an HTTP request.
+We then include these using IE conditional comments to serve the right CSS to each browser. old IE ignores main.css and just pulls ie.css, saving us an HTTP request.
 
 ``` html
 ...
@@ -174,32 +222,6 @@ We then include these using IE conditional comments to serve the right CSS for t
 <![endif]-->
 ...
 
-```
-
-## Extended example
-
-``` scss
-.col{
-	/* Mobile first styles*/
-	background: #000;
-	color: #fff;
-	font-weight: bold;
-	padding: 10px;
-	
-	@include media-query( medium ){
-		padding: 10px;
-	};
-	/* This is our chosen fallback view for old IE */
-	@include media-query( wide ){ 
-		float: left;
-		padding: 5px;
-		width: 25%;
-	};
-	@include media-query( superwide ){
-		float: left;
-		width: 12.5%;
-	};
-}
 ```
 
 ### Future development
