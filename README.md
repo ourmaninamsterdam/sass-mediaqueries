@@ -155,13 +155,12 @@ body {
 }
 ```
 
-In these we set two variables: `$supports-mq` and `$default-view`. It's these which the `media-query` mixing uses to control its output.
+In these we set two variables: `$supports-mq` and `$default-view`. It's these which the `media-query` mixin uses to control its output.
 
 **`_styles.scss`** - include any of your styles. I'm using partials here to keep things modular. 
 
 ```scss
 @import "_config";
-// Include your partials here. Just _base at the moment
 @import "_base"
 // @import "_partials/fonts"
 // @import "_partials/_layout"
@@ -172,7 +171,7 @@ In these we set two variables: `$supports-mq` and `$default-view`. It's these wh
 ```
 `_styles.scss` is just my way of keeping things DRY but you could include all your `@imports` directly within each of the two files, if you wish.
 
-**`base.css`** - Then use the `media-query` mixin in place of any media-query expressions:
+**base.scss** - Then use the `media-query` mixin in place of any media-query expressions:
 
 ```scss
 *{
