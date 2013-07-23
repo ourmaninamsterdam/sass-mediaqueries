@@ -1,7 +1,7 @@
 # Mobile First: Using Sass to provide a default view for old IE (8 and below)
 
 ## Introduction
-When following the responsive, mobile first methodology, there's always an issue of how to support those browsers which don't have media query support, such as old IE. By default, browsers without MQ support will see the mobile view. To workaround this some advocate creating a set of duplicate IE-specific styles as a workaround. This approach leads to duplicate code, increased page weight and possibly a degraded experience. Another approach makes use of JavaScript polyfills, such as [respond.js](https://github.com/scottjehl/Respond), to emulate media queries. The latter goes some way to solving this issue, but also raises a few of its own, notably performance and the reliance on JavaScript.
+When following the responsive, mobile first methodology, there's always an issue of how to support those browsers which don't have media query support, such as old IE. By default, browsers without MQ support will see the mobile view. To workaround this some advocate creating a set of duplicate IE-specific styles as a workaround, leading to duplicate code, increased page weight and possibly a degraded experience. Another approach makes use of JavaScript polyfills, such as [respond.js](https://github.com/scottjehl/Respond), to emulate media queries. This goes some way to solving this issue, but also raises a few of its own, notably performance and the reliance on JavaScript.
 
 ### An alternative approach
 
@@ -30,9 +30,9 @@ The key factor of what makes this work is its reliance on *predefined* media que
 ``` scss
 $media-query-ids: narrow, medium, wide, superwide;
 $media-queries: "only screen and (max-width: 320px)",
-				"only screen and (min-width: 600px)",
-				"only screen and (min-width: 960px)",
-				"only screen and (min-width: 1280px)";
+		"only screen and (min-width: 600px)",
+		"only screen and (min-width: 960px)",
+		"only screen and (min-width: 1280px)";
 ```
 
 A handy helper function then picks the right media query for us. 
